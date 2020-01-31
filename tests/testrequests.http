@@ -1,0 +1,30 @@
+###
+POST http://localhost:8000/recipes/?api_token=1234567890
+Content-Type: application/json;
+Authorization: Basic bWljaGVsOkJydW5vMTIz
+
+
+{"title":"Wirsingauflauf",
+"duration": 60,
+"description":"Mach nix falsches",
+"ingredients":[
+    {
+        "title":"Wirsing",
+        "amount": "2",
+        "unit": "Stück"
+    }
+]}
+
+###
+GET http://localhost:8000/recipes/16?api_token=1234567890
+Content-Type: application/json;
+Authorization: Basic bWljaGVsOkJydW5vMTIz
+
+###
+GET http://localhost:8000/recipes?api_token=1234567890
+Content-Type: application/json;
+Authorization: Basic bWljaGVsOkJydW5vMTIz
+
+###
+# Launch debugger
+GET http://localhost:8000/recipes/?XDEBUG_SESSION_START=15117
