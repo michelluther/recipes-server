@@ -7,6 +7,7 @@ use Illuminate\Hashing\BcryptHasher;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Log;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -33,18 +34,21 @@ class AuthServiceProvider extends ServiceProvider
         // the User instance via an API token or any other method necessary.
         
         $this->app['auth']->viaRequest('api', function ($request) {
-            $authenticationHeader = $request->header('Authorization');
-            if(0 === stripos($authenticationHeader, 'basic ')){
-                $exploded = explode(':', base64_decode(substr($authenticationHeader, 6)), 2);
-                if (2 == \count($exploded)) {
-                    list($uname, $pw) = $exploded;
+            Log::info('i will try the basic auth now');
+            if(!$request->isMethod('options')){
+                $authenticationHeader = $request->header('Authorization');
+                if(0 === stripos($authenticationHeader, 'basic ')){
+                    $exploded = explode(':', base64_decode(substr($authenticationHeader, 6)), 2);
+                    if (2 == \count($exploded)) {
+                        list($uname, $pw) = $exploded;
+                    }
                 }
-            }
-            $user = User::where('username', $uname)->first();
-            if ($user->api_token == $request->input('api_token') && Hash::check($pw, $user->password)) {
-                return new User(["username" => $uname ]);
-            } else {
-                return null;
+                $user = User::where('username', $uname)->first();
+                if ($user->api_token == $request->input('api_token') && Hash::check($pw, $user->password)) {
+                    return new User(["username" => $uname ]);
+                } else {
+                    return null;
+                }
             }
         });
     }

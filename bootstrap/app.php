@@ -21,8 +21,9 @@ $app = new Laravel\Lumen\Application(
     dirname(__DIR__)
 );
 
+$app->configure('filesystems');
 $app->withFacades();
-
+// class_alias('Illuminate\Support\Facades\Storage', 'Storage');
 $app->withEloquent();
 
 /*
@@ -57,13 +58,14 @@ $app->singleton(
 |
 */
 
-// $app->middleware([
-//     App\Http\Middleware\ExampleMiddleware::class
-// ]);
-
-$app->routeMiddleware([
-    'auth' => App\Http\Middleware\Authenticate::class,
+$app->middleware([
+    App\Http\Middleware\Authenticate::class,
+    App\Http\Middleware\CorsMiddleware::class
 ]);
+
+// $app->routeMiddleware([
+//     'auth' => App\Http\Middleware\Authenticate::class,
+// ]);
 
 /*
 |--------------------------------------------------------------------------
@@ -76,8 +78,10 @@ $app->routeMiddleware([
 |
 */
 
-// $app->register(App\Providers\AppServiceProvider::class);
+$app->register(App\Providers\AppServiceProvider::class);
+$app->register(App\Providers\CatchAllOptionsRequestsProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
+// $app->register(Illuminate\Filesystem\FilesystemServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 
 /*

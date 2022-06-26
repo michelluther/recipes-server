@@ -3,7 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Contracts\Auth\Factory as Auth;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class Authenticate
 {
@@ -35,10 +36,16 @@ class Authenticate
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if ($this->auth->guard($guard)->guest()) {
-            return response('Unauthorized.', 401);
-        }
+        Log::info('look at me, I authorize');
+        Log::info($request->url);
+        if($request->path == '') {
+            return $next($request);           
+        } else {
+            if (!Auth::user() && !$request->isMethod('options')) {
+                return response('Unauthorized.', 401);
+            }
 
-        return $next($request);
+            return $next($request);
+        }
     }
 }

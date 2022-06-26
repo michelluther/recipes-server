@@ -10,13 +10,18 @@
 | and give it the Closure to call when that URI is requested.
 |
 */
+$router->get('/', function ()  {
+    return view('index');
+});
 
-$router->get('recipes',['middlewares' => 'auth', 'uses' => 'RecipeController@all']);
+$router->get('/api/recipes',['middlewares' => 'auth', 'uses' => 'RecipeController@all']);
 
-$router->get('recipes/{id}', ['middlewares' => 'auth', 'uses' => 'RecipeController@get']);
+$router->get('/api/recipes/{id}', ['middlewares' => 'auth', 'uses' => 'RecipeController@get']);
+$router->delete('/api/recipes/{id}', ['middlewares' => 'auth', 'uses' => 'RecipeController@delete']);
 
-$router->post('recipes',  ['middlewares' => 'auth', 'uses' => 'RecipeController@create']);
+$router->post('/api/recipes/',  ['middlewares' => 'auth', 'uses' => 'RecipeController@create']);
 
 $router->get('ini', function(){
     return phpinfo();
 });
+

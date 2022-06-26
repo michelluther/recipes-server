@@ -1,30 +1,84 @@
-###
-POST http://localhost:8000/recipes/?api_token=1234567890
+
+### Send Options
+OPTIONS  http://localhost:8000/api/recipes/
+
+### Create a new recipe
+POST http://localhost:8000/api/recipes?api_token=1234567890
+Content-Type: application/json
+Authorization: Basic bWljaGVsOkJydW5vMTIz
+
+{
+    "title":"Vinnies Smoothie",
+    "duration": 5,
+    "description":"Alles in den Mixer, noch 5 Eiswürfel dazu, und mixen",
+    "ingredients":[
+        {
+            "ingredient":"Banane",
+            "amount": 1,
+            "unit": ""
+        },{
+            "ingredient":"Birne",
+            "amount": 1,
+            "unit": ""
+        },{
+            "ingredient":"Weintrauben",
+            "amount": 5,
+            "unit": ""
+        },{
+            "ingredient":"Blaubeeren",
+            "amount": 10,
+            "unit": ""
+        },{
+            "ingredient":"Traubensaft",
+            "amount": 150,
+            "unit": "ml"
+        },{
+            "ingredient":"Zitronensaft",
+            "amount": 0,5,
+            "unit": "Zitrone"
+        },{
+            "ingredient":"Kiwi",
+            "amount": 1,
+            "unit": ""
+        }
+    ],
+    "imageUrl": "https://frechefreunde.de/wp-content/uploads/2018/09/hansis-himbeer-bananen-smoothie.jpg"
+}
+
+
+### Get all recipes
+GET http://localhost:8000/api/recipes?api_token=1234567890
+Content-Type: application/json;
+Authorization: Basic bWljaGVsOkJydW5vMTIz
+
+### Get one recipe
+GET http://localhost:8000/api/recipes/35?api_token=1234567890
+Content-Type: application/json;
+Authorization: Basic bWljaGVsOkJydW5vMTIz
+
+### Get anothter recipe
+GET http://localhost:8000/api/recipes/85?api_token=1234567890
+Content-Type: application/json;
+Authorization: Basic bWljaGVsOkJydW5vMTIz
+
+### Delete a recipe
+DELETE http://localhost:8000/api/recipes/97?api_token=1234567890
 Content-Type: application/json;
 Authorization: Basic bWljaGVsOkJydW5vMTIz
 
 
-{"title":"Wirsingauflauf",
-"duration": 60,
-"description":"Mach nix falsches",
-"ingredients":[
-    {
-        "title":"Wirsing",
-        "amount": "2",
-        "unit": "Stück"
-    }
-]}
 
-###
-GET http://localhost:8000/recipes/16?api_token=1234567890
-Content-Type: application/json;
-Authorization: Basic bWljaGVsOkJydW5vMTIz
 
-###
-GET http://localhost:8000/recipes?api_token=1234567890
-Content-Type: application/json;
-Authorization: Basic bWljaGVsOkJydW5vMTIz
+### Get the static files
+GET http://localhost:8000/
 
 ###
 # Launch debugger
-GET http://localhost:8000/recipes/?XDEBUG_SESSION_START=15117
+GET http://localhost:8000/?XDEBUG_SESSION_START=15117
+
+
+###
+GET http://localhost:8000/storage/recipeImages/34_image.jpg
+
+###
+GET http://localhost:8000/storage/img/recipeImages/33_image.jpg
